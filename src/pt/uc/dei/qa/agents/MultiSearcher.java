@@ -9,7 +9,6 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import pt.uc.dei.qa.answers.BordaCountDocs;
 import pt.uc.dei.qa.answers.HitScore;
 
-//TODO: implementar a classe AbstractAgent ou um interface em comum!
 public class MultiSearcher implements SearchInterface{
 
 	private int topDocuments;
