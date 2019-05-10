@@ -9,3 +9,5 @@
   </ul>
   <li>Maven dependencies + additional dependencies in the <i>lib</i> directory.</li>
 </ul>
+
+Main class for QA agent: QA.java
