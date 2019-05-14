@@ -45,6 +45,7 @@ public class QA {
 		int numResults = 5;
 		boolean overrideIndex = true;
 		SearchInterface searcher = null;
+		boolean fuzzy = false;
 		
 		Properties props = new Properties();
 		try {
@@ -54,11 +55,13 @@ public class QA {
 			overrideIndex = Integer.parseInt(props.getProperty("over")) == 1;
 			numResults = Integer.parseInt(props.getProperty("res"));
 			searcher = searcherFromString(props.getProperty("agent"));
+			fuzzy = Integer.parseInt(props.getProperty("fuzzy")) == 1;
 			
 			System.out.println("FAQs File =\t"+fileFaqs);
 			System.out.println("Override Index =\t"+overrideIndex);
 			System.out.println("Num Results =\t"+numResults);
 			System.out.println("Searcher =\t"+searcher);
+			System.out.println("Fuzzy =\t"+fuzzy);
 			
 		} catch (IOException e1) {
 			System.err.println("Problema com o ficheiro de configuração!");
@@ -81,7 +84,7 @@ public class QA {
 					break;
 				}
 				
-				List<HitScore> hits = searcher.search(text, numResults, false);
+				List<HitScore> hits = searcher.search(text, numResults, fuzzy);
 				for(HitScore hs : hits) {
 					System.out.println(
 						hs.getScore()+": ["+hs.getHit().getService()+"] "+hs.getHit().getQuestion()+"\n"+hs.getHit().getAnswer()+"\n"
