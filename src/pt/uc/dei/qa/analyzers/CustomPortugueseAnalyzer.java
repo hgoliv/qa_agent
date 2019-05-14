@@ -12,9 +12,7 @@ import org.apache.lucene.analysis.pt.PortugueseLightStemFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.synonym.SynonymGraphFilter;
 import org.apache.lucene.analysis.synonym.SynonymMap;
-import org.apache.lucene.analysis.synonym.SynonymMap.Builder;
 import org.apache.lucene.util.CharsRef;
-import org.apache.lucene.util.CharsRefBuilder;
 
 import pt.uc.dei.qa.filters.AccentStripFilter;
 
