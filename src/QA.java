@@ -22,13 +22,13 @@ import pt.uc.dei.qa.answers.HitScore;
 public class QA {
 
 	private static final String FILE_FAQS_TODAS = "resources/faqs_todas.txt";
-	private static final String FILE_FAQS_RJACSR_AL = "resources/faqs_rjacsr_al.txt";
-	private static final String FILE_PORQUES = "resources/osporques.txt";
+	//private static final String FILE_FAQS_RJACSR_AL = "resources/faqs_rjacsr_al.txt";
+	//private static final String FILE_PORQUES = "resources/osporques.txt";
 
 	private static final String FAQS_USAR = FILE_FAQS_TODAS;
 	
 	private static final String FILE_CONFIG = "config.properties";
-	private static final int NUM_AGENTES = 3;
+	//private static final int NUM_AGENTES = 3;
 	
 	public static void main(String args[]) {
 
