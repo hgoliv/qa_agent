@@ -15,6 +15,19 @@
 					<release>9</release>
 				</configuration>
 			</plugin>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<mainClass>QA</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>-->
 		</plugins>
 	</build>
 	<dependencies>
@@ -42,5 +55,8 @@
 			<artifactId>lucene-icu</artifactId>
 			<version>3.6.2</version>
 		</dependency>
+		<!-- <dependency> <groupId>org.apache.opennlp</groupId> <artifactId>opennlp-tools</artifactId> 
+			<version>1.8.4</version> </dependency> <dependency> <groupId>org.apache.opennlp</groupId> 
+			<artifactId>opennlp-maxent</artifactId> <version>3.0.3</version> </dependency> -->
 	</dependencies>
 </project>
