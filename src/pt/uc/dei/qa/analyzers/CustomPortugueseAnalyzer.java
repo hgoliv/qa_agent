@@ -18,24 +18,21 @@ import pt.uc.dei.qa.filters.AccentStripFilter;
 
 public class CustomPortugueseAnalyzer extends Analyzer{
 
-	//TODO: tornar parametrizável
-	private static final String REL_FILE = "resources/triplos.txt";
-	private static final String REL_PREFIX = "SINONIMO";
-	private static final int MIN_RESOURCES = 6;
-	private static final String ACRONYMS_FILE = "resources/acronimos.txt";
-
 	protected SynonymMap synonymMap;
 	private boolean stemming;
+	
+	//private static String synonymsFile;
+	//private static String acronymsFile;
 
 	public CustomPortugueseAnalyzer(boolean stemming) {
-		this(true, false);
+		this(true, null);
 	}
 
-	public CustomPortugueseAnalyzer(boolean stemming, boolean synonyms) {
+	public CustomPortugueseAnalyzer(boolean stemming, SynonymsConfig synConfig) {
 		this.stemming = stemming;
 
-		if(synonyms) {
-			setSynonymMap(ACRONYMS_FILE, REL_FILE, REL_PREFIX, MIN_RESOURCES);
+		if(synConfig != null) {
+			setSynonymMap(synConfig);
 		}
 	}
 
@@ -65,16 +62,16 @@ public class CustomPortugueseAnalyzer extends Analyzer{
 	 * Acronyms file where each line has an acronym=full name
 	 * Synonyms file where each line contains a relation between a and b plus a number n: a RELATION b n
 	 */
-	protected void setSynonymMap(String acronymsFile, String relationsFile, String relationPrefix, int minResources) {
+	protected void setSynonymMap(SynonymsConfig synConfig) {
 
 		SynonymMap.Builder builder = new SynonymMap.Builder(true);
 		BufferedReader reader;
 		
 		try {
 			
-			if(acronymsFile != null) {
+			if(synConfig.getAcronymsFile() != null) {
 				
-				reader = new BufferedReader(new FileReader(acronymsFile));
+				reader = new BufferedReader(new FileReader(synConfig.getAcronymsFile()));
 				String line = null;
 				while((line = reader.readLine()) != null) {
 
@@ -99,25 +96,31 @@ public class CustomPortugueseAnalyzer extends Analyzer{
 				}
 			}
 
-			if(relationsFile != null) {
-				reader = new BufferedReader(new FileReader(relationsFile));
+			if(synConfig.getSynonymsFile() != null) {
+				
+				reader = new BufferedReader(new FileReader(synConfig.getSynonymsFile()));
 				String line = null;
 				while((line = reader.readLine()) != null) {
 
 					String[] cols = line.split(" ");
-					if(cols[1].startsWith(relationPrefix)) {
+					for(String p : synConfig.getPrefixes()) {
+						
+						if(cols[1].startsWith(p)) {
 
-						int r = java.lang.Integer.parseInt(cols[3]);
-						if(r >= minResources) {
-							//System.err.println(cols[0]+"<->"+cols[2]);
-							
-							String esc1 = cols[0].replace('_', SynonymMap.WORD_SEPARATOR).toLowerCase();
-							String esc2 = cols[2].replace('_', SynonymMap.WORD_SEPARATOR).toLowerCase();
-							
-							builder.add(new CharsRef(esc1), new CharsRef(esc2), true);
-							builder.add(new CharsRef(esc2), new CharsRef(esc1), true);
+							int r = java.lang.Integer.parseInt(cols[3]);
+							if(r >= synConfig.getMinConfidence()) {
+								//System.err.println(cols[0]+"<->"+cols[2]);
+								
+								String esc1 = cols[0].replace('_', SynonymMap.WORD_SEPARATOR).toLowerCase();
+								String esc2 = cols[2].replace('_', SynonymMap.WORD_SEPARATOR).toLowerCase();
+								
+								builder.add(new CharsRef(esc1), new CharsRef(esc2), true);
+								builder.add(new CharsRef(esc2), new CharsRef(esc1), true);
+							}
 						}
+						
 					}
+					
 				}
 			}
 

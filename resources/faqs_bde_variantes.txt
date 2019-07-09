@@ -279,7 +279,7 @@ P:o que acontece se a menos de 300 metros de uma sex shop, a funcionar legalment
 P:o que acontece se perto de uma sex shop for aberta uma escola
 P:o que acontece se próximo de uma sex shop for instalado um estabelecimento de educação pré-escolar
 P:o que acontece se perto de uma sexshop for construido uma igreja
-P:o que acontece se perto de uma sexshop for construido um espaço para crianças
+P:e se perto de uma sexshop for construido um espaço para crianças
 R:A sua instalação não impede o funcionamento da sex shop, ainda que sejam sujeitos a obras ou se verifique a alteração do respetivo titular.
 P:a venda de produtos de conteúdo pornográfico e obsceno é permitida a menores de 18 anos
 P:posso vender pronografia numa sex shop a menores de 18?
@@ -558,7 +558,7 @@ P:tenho um imóvel e gostaria de o ceder para exploração como “alojamento lo
 P:gostaria de deixar outra pessoa explorar a minha casa
 P:O que devemos fazer para um amigo a explorar o meu imóvel?
 R:Se é o proprietário e pretende que a prestação de serviços de alojamento no imóvel seja realizada por outra pessoa, deve celebrar um contrato de arrendamento, de cessão de exploração, ou outro, que habilite essa pessoa ou empresa à prestação do referido serviço. É depois essa pessoa ou empresa que deve efetuar a mera comunicação prévia para registo do alojamento.
-P:Eu apenas alugo um quarto na minha moradia. Será considerado alojamento local em que modalidade?
+P:Eu apenas alugo um quarto na minha moradia. Será considerado alojamento local? Em que modalidade?
 P:alugar um quarto é considerado alojamento local
 P:em que modalidade entra o aluguer de um quarto
 P:Que tipo de alojamento local é considerado o aluguer de um quarto em minha casa?
@@ -592,7 +592,7 @@ P:qual a diferença entre moradia e hostel
 P:Posso chamar hostel a uma casa com muitos quartos com beliches?
 R:Tem de se atender à unidade de alojamento: na moradia a unidade de alojamento é a própria moradia, ou seja, a locação é da moradia. Se o que se pretende fazer é a locação de quartos, este facto já se integra no conceito de hospedagem. Para usar a denominação de Hostel é necessário que se trate de um estabelecimento de hospedagem em que a unidade de alojamento predominante seja o dormitório.
 P:o que é preciso para explorar estabelecimentos de alojamento local
-P:para explorar estabelecimentos de alojamento local é necessário algum licenciamento ou autorização
+P:para explorar estabelecimentos de alojamento local é necessário licenciamento ou autorização
 P:quais os procedimentos legais para explorar estabelecimentos de alojamento local?
 R:Não, basta registar o estabelecimento no Registo do Alojamento Local (RNAL) através de uma mera comunicação prévia efetuada no Balcão Único Eletrónico.
 P:pretendo registar como alojamento local um imóvel que está situado no mesmo espaço de um empreendimento turístico, no caso, apartamentos turísticos, e não tenho contrato de exploração com a empresa que gere esse empreendimento. posso avançar com o registo no alojamento local do meu imóvel ou isso vai entrar em conflito com a classificação do empreendimento turístico

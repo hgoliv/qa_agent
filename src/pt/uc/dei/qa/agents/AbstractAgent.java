@@ -36,6 +36,7 @@ import dictionary.DictionaryLoadException;
 import lemma.Lemmatizer;
 import pos.POSTagger;
 import pt.uc.dei.qa.analyzers.CustomPortugueseAnalyzer;
+import pt.uc.dei.qa.analyzers.SynonymsConfig;
 import pt.uc.dei.qa.answers.Hit;
 import pt.uc.dei.qa.answers.HitScore;
 import rank.WordRankingLoadException;
@@ -49,6 +50,9 @@ public abstract class AbstractAgent implements SearchInterface{
 	public static final String LEM_QUESTION_FIELD = "PL";
 	public static final String LEM_ANSWER_FIELD = "RL";
 
+	/** stores synonym-related configuration: file (for synonyms and acronyms), prefixes, confidence **/ 
+	public static SynonymsConfig synonymsConfig = new SynonymsConfig();
+	
 	protected static StandardAnalyzer analyzerStd;
 	protected static PortugueseAnalyzer analyzerPT;
 	protected static Analyzer analyzerCustom;
@@ -94,7 +98,7 @@ public abstract class AbstractAgent implements SearchInterface{
 	}
 
 	public CustomPortugueseAnalyzer getCustomAnalyzer(boolean stemming, boolean synonyms) {
-		return new CustomPortugueseAnalyzer(stemming, synonyms);
+		return new CustomPortugueseAnalyzer(stemming, synonyms ? synonymsConfig : null);
 	}
 
 	protected static Tokenizer getTokenizer() throws InvalidPropertiesFormatException, IOException, ParserConfigurationException, SAXException {
@@ -184,7 +188,7 @@ public abstract class AbstractAgent implements SearchInterface{
 		isearcher = new IndexSearcher(ireader);
 	}
 
-	private static String indexName(String faqsFile, Analyzer analyzer, boolean lemmatizeQuestion, boolean lemmatizeAnswer) {
+	public static String indexName(String faqsFile, Analyzer analyzer, boolean lemmatizeQuestion, boolean lemmatizeAnswer) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -297,4 +301,15 @@ public abstract class AbstractAgent implements SearchInterface{
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
+	
+	public static void setSynonymsConfig(String path, String[] prefixes, double minConfidence) {
+		synonymsConfig.setSynonymsFile(path);
+		synonymsConfig.setPrefixes(prefixes);
+		synonymsConfig.setMinConfidence(minConfidence);
+	}
+	
+	public static void setAcronymsFile(String path) {
+		synonymsConfig.setAcronymsFile(path);
+	}
+	
 }
