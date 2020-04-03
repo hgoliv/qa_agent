@@ -1,3 +1,4 @@
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +25,6 @@ public class QA {
 	private static final String FILE_FAQS_TODAS = "resources/faqs_todas.txt";
 	//private static final String FILE_FAQS_RJACSR_AL = "resources/faqs_rjacsr_al.txt";
 	//private static final String FILE_PORQUES = "resources/osporques.txt";
-
 	private static final String FAQS_USAR = FILE_FAQS_TODAS;
 	
 	private static final String FILE_CONFIG = "config.properties";
@@ -54,14 +54,25 @@ public class QA {
 			fileFaqs = props.getProperty("faqs");
 			overrideIndex = Integer.parseInt(props.getProperty("over")) == 1;
 			numResults = Integer.parseInt(props.getProperty("res"));
-			searcher = searcherFromString(props.getProperty("agent"));
 			fuzzy = Integer.parseInt(props.getProperty("fuzzy")) == 1;
 			
-			System.out.println("FAQs File =\t"+fileFaqs);
-			System.out.println("Override Index =\t"+overrideIndex);
-			System.out.println("Num Results =\t"+numResults);
-			System.out.println("Searcher =\t"+searcher);
-			System.out.println("Fuzzy =\t"+fuzzy);
+			//static fields of the AbstractAgent class, to be used by agents that exploit synonyms
+			String synonyms = props.getProperty("synonyms");
+			String[] synPrefixes = props.getProperty("syn-prefixes").split(",");
+			double minConfidence = Double.parseDouble(props.getProperty("min-conf"));
+			AbstractAgent.setSynonymsConfig(synonyms, synPrefixes, minConfidence);
+			String acronyms = props.getProperty("acronyms");
+			AbstractAgent.setAcronymsFile(acronyms);
+			
+			//last thing to do, because it depends on the synonyms configuration
+			searcher = searcherFromString(props.getProperty("agent"));
+			
+			System.out.println("FAQs File\t=\t"+fileFaqs);
+			System.out.println("Override Index\t=\t"+overrideIndex);
+			System.out.println("Num Results\t=\t"+numResults);
+			System.out.println("Synonyms\t=\t"+AbstractAgent.synonymsConfig);
+			System.out.println("Searcher\t=\t"+searcher);
+			System.out.println("Fuzzy\t=\t"+fuzzy);
 			
 		} catch (IOException e1) {
 			System.err.println("Problema com o ficheiro de configuração!");
