@@ -39,6 +39,7 @@ import pt.uc.dei.qa.analyzers.CustomPortugueseAnalyzer;
 import pt.uc.dei.qa.analyzers.SynonymsConfig;
 import pt.uc.dei.qa.answers.Hit;
 import pt.uc.dei.qa.answers.HitScore;
+import pt.uc.dei.qa.variations.QuestionVariationsProcessor;
 import rank.WordRankingLoadException;
 import token.Tokenizer;
 
@@ -134,7 +135,7 @@ public abstract class AbstractAgent implements SearchInterface{
 	public void createIndex(String fileFaqs, boolean override) throws IOException{
 		createFAQIndex(fileFaqs, lemmatizeQuestion, lemmatizeAnswer, override);
 	}
-
+	
 	protected void createFAQIndex(String faqsFile, boolean lemmatizeQuestion, boolean lemmatizeAnswer, boolean override) throws IOException{
 
 		String indexName = indexName(faqsFile, analyzer, lemmatizeQuestion, lemmatizeAnswer);
@@ -154,10 +155,10 @@ public abstract class AbstractAgent implements SearchInterface{
 			String service = null;
 			while((line = reader.readLine()) != null) {
 
-				if(line.startsWith("S:")) {
+				if(line.startsWith(QuestionVariationsProcessor.SECTION+":")) {
 					service = line.substring(2);				
 				}
-				else if(line.startsWith("P:")) {
+				else if(line.startsWith(QuestionVariationsProcessor.ORIGINAL+":")) {
 					doc = new Document();
 					String p = line.substring(2);
 					doc.add(new TextField(QUESTION_FIELD, p, Field.Store.YES));
@@ -168,7 +169,7 @@ public abstract class AbstractAgent implements SearchInterface{
 						doc.add(new TextField(LEM_QUESTION_FIELD, l, Field.Store.YES));
 					}
 				}
-				else if(line.startsWith("R:")) {
+				else if(line.startsWith(QuestionVariationsProcessor.ANSWER+":")) {
 					String r = line.substring(2);
 					doc.add(new TextField(ANSWER_FIELD, r, Field.Store.YES));
 					if(lemmatizeQuestion || lemmatizeAnswer) {
@@ -186,6 +187,7 @@ public abstract class AbstractAgent implements SearchInterface{
 
 		DirectoryReader ireader = DirectoryReader.open(directory);
 		isearcher = new IndexSearcher(ireader);
+		//System.err.println("Similarity = "+isearcher.getSimilarity(true));
 	}
 
 	public static String indexName(String faqsFile, Analyzer analyzer, boolean lemmatizeQuestion, boolean lemmatizeAnswer) {
@@ -283,10 +285,11 @@ public abstract class AbstractAgent implements SearchInterface{
 		text = QueryParser.escape(text);
 
 		//TODO: devia ser feito com o tokenizer do Analyzer... ou até com a FuzzyQuery!
-		String[] tokens = text.split("[\\p{Punct}\\s]+");
+		String[] tokens = text.split("[\\p{Punct}\\s\\-]+");
 		StringBuilder sb = new StringBuilder();
 		for(String t : tokens)
-			sb.append(t+"~ ");
+			if(!t.trim().isEmpty())
+				sb.append(t+"~ ");
 
 		MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, analyzer);
 		Query query = parser.parse(sb.toString());
